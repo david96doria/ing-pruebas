@@ -1,0 +1,11 @@
+#!/bin/bash
+
+echo "Running PCB validation..."
+
+python3 new_ref.py 
+python3 cmp_pcb.py
+git status
+git add .
+git commit -am "Updating database"
+git push
+
