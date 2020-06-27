@@ -10,14 +10,6 @@ import subprocess
 
 date = datetime.datetime.now()
 
-def run(*args):
-    return subprocess.check_call(['git'] + list(args))
-
-def push_database(msg):
-    run("add", ".")
-    run("commit", "-m", msg)
-    run("push", "-u", "origin", "master")
-
 def create_file():
     # dataframe Name and Age columns
     df = pd.DataFrame({'Fecha': [],
@@ -52,10 +44,6 @@ def fill_cell(status):
     # write out the new sheet
     df.to_excel(writer,index=False,header=False,startrow=len(reader)+1)
     writer.close()
-
-    # push changes to Bitbucket
-    commit_message = 'testing' #date.microsecond + 'fue' + status
-    push_database(commit_message)
 
 # create_file()
 
@@ -118,10 +106,12 @@ print("Error:", diff, "%")
 if (diff > errMax):
     msg1 = ('Automatic-Inspection Failed!')
     msg2 = ('Please, contact a debug technician.')
+    #create_file()
     fill_cell('fail')
 else:
     msg1 = ('Automatic-Inspection Passed!')
     msg2 = ('Please, continue with the process.')
+    #create_file()
     fill_cell('pass')
 
 # Resize and show the images
